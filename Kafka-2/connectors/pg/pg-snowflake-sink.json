@@ -1,0 +1,25 @@
+{
+  "name": "pg-snowflake-sink",
+  "config": {
+    "connector.class": "com.snowflake.kafka.connector.SnowflakeSinkConnector",
+    "tasks.max": "1",
+    "topics": "postgres_cdc.test_db.users,postgres_cdc.test_db.orders",
+
+    "snowflake.url.name": "fk40533.eu-central-2.aws.snowflakecomputing.com",
+    "snowflake.user.name": "AYAAHMED123",
+    "snowflake.private.key": "MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCwTz4lPPv3SheOZu+96JT2UHZU56XE+u5Ynf1ra3NO8FaimIVc41FhGlks7zS9Ly4RN0mazQDRwMlT9/VNcdIrbPuoPKSg96N31mDrwFs4x9xTy8XtVSAf8aQPguG+J9I0nnVBpPdOb3z36fsVtkE76KCCCrB6GP1pupDeh7RXrOs/797sybOKA9UJH/H/3NeovAG69gIFT+U+ePRiehQLH9tK2WpR4QF9psDU62CXaNEVgidMLbJUpSPczdd0ctZbd7a93cuIuXwIxdiMHKOOjrtm5ZoZz2yUL2/dmusdcWt4lwfyCXProS7WGDOpuXnHzGjChuZArMETIouTOmTVAgMBAAECgf9l9jq6Z/2CxbAmna3uf6AMn5VpBMGZaVG6oT1gu7aAfTDQV338E62JVCa+SP6QnV7G4tjUujn/E/Indv6/pIbAsAZAOGuWeG03bYNS06uHUUFAmyTPKRIRZzpTiupPGwU16QdmyNoJqLz2b4DSZzrSqqj1WIYDsCNEDq3S0I6hiybT0rP8vF9m1aLBNpebzT/NR9dT0cI4BL5gyIsFqdwe52UTiCGrlHpqetaLD19L4UY1sPLENtofaCqEVNG+voZNZ+pl0G86ANzLIcW8YQHXC8L8XuVKIwi3t4zUXnnEzO2iZlDb1F0Oxy1E1hyKHbUdpVvaIcB+bHZ/IdtziCkCgYEA9VbmsWmx4y7Ga6DgRbmf2ecPq89NoVnsbQCu2C2+LSA73EXQAuGFMxyuo7NPNincP3kIkP8P8XsyWVFkDw5GdIKa8I+FDD6JBBmfipEQu+4NFD0hp07lWX+R9JOrBqIMS9N8mm+gJDTgcE75v7PZz++ZRG0XW9/fHw7Zb/t3E/0CgYEAt/h4DLoZWl0hKXKJ8evQeUw2a4VcUbuYckgeHDJNRJP6MFWnx7+03CHtjyDr8GdoInHpRqkr5nsbqWPoHuWsppYmqf1cPH7zBCxe/jx+ClmbJ6uRfUeHjw1v+W+ZbRsJT6emDk4y+lDrvX7h94Dvk6gJg3CvmTRR5qD0X31/r7kCgYAElu2V4A5N27Amj0nixAgzgVkPs78WB6Ken2al8KUgHvw/sKalhyaAwEacFVyj/MB8B32biMn5kH5uoVEn3vJ+d3sCiQzKH9lcVEZhxzjy6w8fk80vXhB4TiSi2KhYZWupd3lbQj9SrhKMx01wwqKOe0L4vrmzJEr+P77dk2y02QKBgQCIzLWQWS4TGN9Y77gN8dly6S4qY9+TU1j32hKxyuHUFelb2cXKbg5yBrSc0tE/UdWIj4X0qkVfvLmECyuHFih9M3gKvcDBp3DT8J6ulJLw5VLPe+/S5caypD5YkBjZndodpj9/sbyMkHHL1jb3kaQU+0YfvEKHPPWN9q/g9fRl2QKBgQDzl/30dvwv5/9ea/p5Rst3GDAgd/dASyqgkiuK3vuel33U1hfnb9FQO3FP+QHf1e05Gcmzmd3XiyzO7/fCUcq/iV+ntzormQsSLhBOg9qLvtvzoD62SxOj06AQRtKFbpTCBieVOGlENl/q652+uW9Jr1Hh6nAvunyZ3wrNVuh4Ew==",
+    "snowflake.private.key.passphrase": "",
+
+    "snowflake.database.name": "test_db",
+    "snowflake.schema.name": "test_db",
+    "snowflake.role.name": "SYSADMIN",
+
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+
+    "buffer.count.records": "10000",
+    "buffer.size.bytes": "5000000",
+    "buffer.flush.timeSec": "60"
+  }
+}

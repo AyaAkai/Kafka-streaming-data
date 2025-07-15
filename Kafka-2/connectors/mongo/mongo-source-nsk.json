@@ -1,0 +1,35 @@
+{
+  "name": "mongodb-nsk-26",
+  "config": {
+    "connector.class": "io.debezium.connector.mongodb.MongoDbConnector",
+    "tasks.max": "1",
+    "topic.prefix": "cdc",
+    "mongodb.connection.string": "mongodb://mongodb:27017/?authSource=admin&replicaSet=rs0",
+    "database.include.list": "test_db",
+    "collection.include.list": "test_db.authorized_user",
+    
+    "publish.full.document.only": "true",
+    "output.json.formatter": "com.mongodb.kafka.connect.source.json.formatter.SimplifiedJson",
+    "output.format.key":"json",
+    "output.format.value":"json",
+
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false",
+
+    
+    "transforms": "ExtractAfter",
+    "transforms.ExtractAfter.type": "org.apache.kafka.connect.transforms.ExtractField$Value",
+    "transforms.ExtractAfter.field": "after",
+
+    "provide.transaction.metadata": "true",
+    "heartbeat.interval.ms": "5000",
+    "snapshot.mode": "initial",
+    "poll.interval.ms": "1000",
+    "database.history.kafka.bootstrap.servers": "broker:9092",
+    "database.history.kafka.topic": "schema-changes.mongodb",
+    "errors.tolerance": "all",
+    "errors.log.enable": "true"
+  }
+}

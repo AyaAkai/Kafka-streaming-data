@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseName": {
+      "value": "vscode-pgsql"
+    },
+    "environment": {
+      "value": "prod"
+    },
+    "location": {
+      "value": "eastus"
+    },
+    "retentionInDays": {
+      "value": 730
+    },
+    "dailyQuotaInGB": {
+      "value": 0
+    },
+    "tags": {
+      "value": {
+        "Environment": "production",
+        "Application": "PostgreSQL extension for VS Code",
+        "Owner": "PostgreSQL DevX"
+      }
+    },
+    "deploymentSubscriptionId": {
+      "value": "3df8cad2-a0ac-495b-9ca5-11a8b9a8893a"
+    },
+    "deploymentResourceGroup": {
+      "value": "rg-vscode-pgsql"
+    }
+  }
+}

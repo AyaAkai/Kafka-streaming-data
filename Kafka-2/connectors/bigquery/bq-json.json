@@ -1,0 +1,32 @@
+{
+    "name": "bqkc2",
+    "config": {
+        "name": "bqkc2",
+        "connector.class": "com.wepay.kafka.connect.bigquery.BigQuerySinkConnector",
+        "allowNewBigQueryFields": "true",
+        "allowBigQueryRequiredFieldRelaxation": "true",
+        "allowSchemaUnionization": "false",
+        "allBQFieldsNullable": "true",
+        "sanitizeTopics": "true",
+        "autoCreateTables": "true",
+        "tasks.max": "1",
+        "topics.regex": "dcs-demo1.*",
+        "schemaRegistryLocation": "http://schema-registry:8081",
+        "project": "kafka-demo-420521",
+        "defaultDataset": "kafka_cdc",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "maxWriteSize": "250",
+        "tableWriteWait": "250",
+        "bufferSize": "500",
+        "keySource": "FILE",
+        "keyfile": "/tmp/config/bq-sa.json",
+        "transforms": "insertTS,formatTS",
+        "transforms.insertTS.type"            : "org.apache.kafka.connect.transforms.InsertField$Value",
+        "transforms.insertTS.timestamp.field" : "messageTS",
+        "transforms.formatTS.type"            : "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.formatTS.format"          : "yyyy-MM-dd HH:mm:ss:SSS",
+        "transforms.formatTS.field"           : "messageTS",
+        "transforms.formatTS.target.type"     : "string"
+    }
+}

@@ -1,0 +1,86 @@
+steps:
+  - task: UseNode@1
+    displayName: "Use Node.js 22"
+    inputs:
+      version: "22.x"
+
+  - task: npmAuthenticate@0
+    inputs:
+      workingFile: .npmrc
+
+  - task: Bash@3
+    displayName: "Run build Linux"
+    inputs:
+      targetType: "inline"
+      script: |
+        echo "Installing Yarn"
+        npm install --global yarn@1.22.19
+        echo "Installing Gulp CLI"
+        npm install --global gulp-cli@2.3.0
+        echo "Installing VSCE"
+        npm install --global @vscode/vsce@3.3.2
+        echo "Installing gulp"
+        npm install --global gulp@4.0.2
+
+  - task: Bash@3
+    displayName: "Install extension dependencies"
+    inputs:
+      targetType: "inline"
+      script: |
+        cd $(Build.SourcesDirectory)
+        # TODO: this is temporary until we have a PR validator pipeline that can
+        # also authenticate to the private npm registry.
+        # yarn --frozen-lockfile
+        rm -rf node_modules
+        mv yarn.lock yarn.lock_bak
+        mv yarn.lock_cfs yarn.lock
+        echo "=== Installing dependencies ==="
+        head yarn.lock -n 20
+        yarn install --verbose --frozen-lockfile
+
+  - task: Bash@3
+    displayName: "Build extension"
+    inputs:
+      targetType: "inline"
+      script: |
+        cd $(Build.SourcesDirectory)
+        yarn build --prod
+
+  - task: Bash@3
+    displayName: "Generate Unique Version"
+    inputs:
+      targetType: "inline"
+      script: |
+        # Use tag as version
+        VERSION=${BUILD_SOURCEBRANCH#refs/tags/}
+        echo "##vso[task.setvariable variable=VERSION]$VERSION"
+        echo "Generated version: $VERSION"
+
+  - task: Bash@3
+    displayName: "Package extension"
+    inputs:
+      targetType: "inline"
+      script: |
+        npm version --no-git-tag-version ${VERSION#v} || echo "Version unchanged, skipping version update."
+        set -euo pipefail
+        yarn gulp package:online
+        mv vscode-pgsql-*.vsix $(Build.ArtifactStagingDirectory)/vscode-pgsql.vsix
+
+        ls $(Build.ArtifactStagingDirectory)
+
+  - script: vsce generate-manifest -i vscode-pgsql.vsix -o extension.manifest
+    displayName: "Generate extension manifest"
+    workingDirectory: $(Build.ArtifactStagingDirectory)
+
+  - script: cp extension.manifest extension.signature.p7s
+    displayName: "Prepare manifest for signing"
+    workingDirectory: $(Build.ArtifactStagingDirectory)
+
+    # See: https://eng.ms/docs/cloud-ai-platform/devdiv/vs-services-dougam/vs-marketplace-doronm/visual-studio-marketplace/secure-publishing-to-vs-marketplace/publisher-signing-as-microsoft#cai-teams-sign-using-onebranch
+  - task: onebranch.pipeline.signing@1
+    displayName: "Sign extension manifest"
+    inputs:
+      command: "sign"
+      cp_code: CP-401405-VSCodePublisherSign
+      files_to_sign: "**/extension.signature.p7s"
+      search_root: $(Build.ArtifactStagingDirectory)

@@ -1,0 +1,2050 @@
+{
+  "name": "vscode-pgsql",
+  "displayName": "PostgreSQL",
+  "version": "1.6.0",
+  "description": "Develop PostgreSQL applications everywhere.",
+  "publisher": "ms-ossdata",
+  "preview": true,
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "aiKey": "12e9e127-ee85-4a62-9926-b5d94dc48b3b",
+  "icon": "images/extension-icon.png",
+  "galleryBanner": {
+    "color": "#2F2F2F",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/vscode-pgsql"
+  },
+  "bugs": {
+    "url": "https://github.com/microsoft/vscode-pgsql/issues"
+  },
+  "homepage": "https://github.com/microsoft/vscode-pgsql/blob/main/README.md",
+  "engines": {
+    "vscode": "^1.95.2"
+  },
+  "categories": [
+    "Programming Languages",
+    "Azure"
+  ],
+  "keywords": [
+    "SQL",
+    "PGSQL",
+    "Postgres",
+    "PostgreSQL",
+    "Azure PostgreSQL"
+  ],
+  "activationEvents": [
+    "onUri",
+    "onCommand:pgsql.loadCompletionExtension"
+  ],
+  "main": "./out/src/extension",
+  "l10n": "./localization/l10n",
+  "extensionDependencies": [
+    "vscode.sql"
+  ],
+  "extensionPack": [],
+  "scripts": {
+    "typecheck": "tsc -p ./tsconfig.json",
+    "build": "gulp build",
+    "compile": "gulp ext:compile",
+    "watch": "gulp watch",
+    "lint": "eslint --quiet --cache",
+    "localization": "gulp ext:extract-localization-strings",
+    "smoketest": "gulp ext:smoke",
+    "test": "node ./out/test/unit/runTest.js",
+    "package": "gulp package:online",
+    "prepare": "husky",
+    "lint-staged": "lint-staged --quiet",
+    "precommit": "run-p lint-staged localization",
+    "clean-package": "git clean -xfd && yarn install && yarn build && yarn gulp package:online",
+    "testWithCoverage": "yarn test && yarn gulp cover"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --quiet --cache",
+    "*.tsx": "eslint --quiet --cache",
+    "*.css": "prettier --check"
+  },
+  "devDependencies": {
+    "@angular/common": "~2.1.2",
+    "@angular/compiler": "~2.1.2",
+    "@angular/core": "~2.1.2",
+    "@angular/forms": "~2.1.2",
+    "@angular/platform-browser": "~2.1.2",
+    "@angular/platform-browser-dynamic": "~2.1.2",
+    "@angular/router": "~3.1.2",
+    "@angular/upgrade": "~2.1.2",
+    "@azure/core-paging": "^1.6.2",
+    "@dagrejs/dagre": "1.1.4",
+    "@eslint/compat": "^1.1.0",
+    "@eslint/js": "^9.5.0",
+    "@fluentui-contrib/react-data-grid-react-window": "^1.2.0",
+    "@fluentui/react-components": "^9.55.1",
+    "@fluentui/react-list-preview": "^0.3.6",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@jgoz/esbuild-plugin-typecheck": "^4.0.0",
+    "@monaco-editor/react": "^4.6.0",
+    "@playwright/test": "^1.45.0",
+    "@stylistic/eslint-plugin": "^2.8.0",
+    "@types/azdata": "^1.46.6",
+    "@types/ejs": "^3.1.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/jquery": "^3.3.31",
+    "@types/jqueryui": "^1.12.7",
+    "@types/keytar": "^4.4.2",
+    "@types/lockfile": "^1.0.2",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^20.14.8",
+    "@types/node-fetch": "^2.6.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-resizable": "^3.0.8",
+    "@types/sinon": "^10.0.12",
+    "@types/tmp": "0.0.28",
+    "@types/tunnel": "0.0.1",
+    "@types/underscore": "1.8.3",
+    "@types/vscode": "1.95.0",
+    "@types/vscode-webview": "^1.57.5",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "@vscode/l10n": "^0.0.18",
+    "@vscode/l10n-dev": "^0.0.35",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "3.3.2",
+    "@xmldom/xmldom": "0.8.4",
+    "@xyflow/react": "^12.5.1",
+    "angular-in-memory-web-api": "0.1.13",
+    "angular2-slickgrid": "github:microsoft/angular2-slickgrid#1.4.7",
+    "assert": "^1.4.1",
+    "azdataGraph": "github:Microsoft/azdataGraph#0.0.77",
+    "chai": "^3.5.0",
+    "cli-color": "^2.0.4",
+    "coveralls": "^3.0.2",
+    "decache": "^4.1.0",
+    "del": "^2.2.1",
+    "esbuild": "^0.25.0",
+    "esbuild-plugin-copy": "^2.1.1",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-deprecation": "^3.0.0",
+    "eslint-plugin-jsdoc": "^50.2.2",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-notice": "^1.0.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-eslint-new": "^2.1.0",
+    "gulp-istanbul-report": "0.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-run-command": "^0.0.10",
+    "gulp-shell": "^0.7.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^5.0.1",
+    "gulp-uglify": "^2.0.0",
+    "husky": "^9.0.11",
+    "istanbul": "^0.4.5",
+    "lint-staged": "^15.2.10",
+    "lodash": "4.17.21",
+    "mocha-junit-reporter": "^2.2.1",
+    "npm-run-all": "^4.1.5",
+    "nyc": "^17.1.0",
+    "prettier": "^3.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
+    "react-resizable": "^3.0.5",
+    "react-router-dom": "^6.24.1",
+    "remap-istanbul": "0.9.6",
+    "rxjs": "5.0.0-beta.12",
+    "sinon": "^14.0.0",
+    "slickgrid": "github:Microsoft/SlickGrid.ADS#2.3.46",
+    "source-map-support": "^0.5.21",
+    "systemjs": "0.19.40",
+    "systemjs-builder": "^0.15.32",
+    "systemjs-plugin-json": "^0.2.0",
+    "tailwind-merge": "^3.0.2",
+    "ts-node": "^10.9.2",
+    "typemoq": "^1.7.0",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.7.0",
+    "uglify-js": "mishoo/UglifyJS2#harmony-v2.8.22",
+    "vscode-nls-dev": "2.0.1",
+    "xliff": "^6.2.1",
+    "yargs": "^17.7.2"
+  },
+  "dependencies": {
+    "@azure/arm-postgresql-flexible": "^7.1.0",
+    "@azure/arm-resources": "^5.0.0",
+    "@azure/arm-sql": "^9.0.0",
+    "@azure/arm-subscriptions": "^5.0.0",
+    "@azure/msal-common": "^14.14.0",
+    "@azure/msal-node": "^2.12.0",
+    "@microsoft/ads-extension-telemetry": "^3.0.2",
+    "@microsoft/vscode-azext-azureauth": "^4.1.1",
+    "@microsoft/vscode-container-client": "0.2.1",
+    "@types/lodash": "^4.17.16",
+    "axios": "^1.8.2",
+    "core-js": "^2.4.1",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "error-ex": "^1.3.0",
+    "figures": "^1.4.0",
+    "find-remove": "1.2.1",
+    "getmac": "1.2.1",
+    "jquery": "^3.4.1",
+    "lockfile": "1.0.4",
+    "node-fetch": "^2.6.2",
+    "opener": "1.4.2",
+    "plist": "^3.0.6",
+    "pretty-data": "^0.40.0",
+    "qs": "^6.9.1",
+    "rangy": "^1.3.0",
+    "reflect-metadata": "0.1.12",
+    "semver": "https://registry.npmjs.org/semver/-/semver-5.0.3.tgz",
+    "signal-exit": "^4.1.0",
+    "tar": "^7.4.3",
+    "tmp": "^0.0.28",
+    "tunnel": "0.0.6",
+    "underscore": "^1.8.3",
+    "vscode-languageclient": "5.2.1",
+    "vscode-nls": "^2.0.2",
+    "yallist": "^5.0.0",
+    "yauzl": "^3.2.0",
+    "zone.js": "^0.6.26"
+  },
+  "resolutions": {
+    "gulp-typescript/source-map": "0.7.4"
+  },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "pgObjectExplorer",
+          "title": "PostgreSQL",
+          "icon": "media/draft-pg-icon.svg"
+        }
+      ],
+      "panel": [
+        {
+          "id": "pgQueryResult",
+          "title": "PostgreSQL Query Results",
+          "icon": "media/SignIn.svg"
+        }
+      ]
+    },
+    "views": {
+      "pgQueryResult": [
+        {
+          "type": "webview",
+          "id": "pgQueryResult",
+          "name": "%extension.queryResult%"
+        }
+      ],
+      "pgObjectExplorer": [
+        {
+          "id": "pg-objectExplorer",
+          "name": "%extension.connections%"
+        },
+        {
+          "id": "pg-queryHistory",
+          "name": "%extension.queryHistory%",
+          "when": "config.pgsql.enableQueryHistoryFeature"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "pg-objectExplorer",
+        "contents": "%pgsql.fetchingConnections%"
+      },
+      {
+        "view": "pg-queryHistory",
+        "contents": "%pgsql.loadingQueryHistory%"
+      }
+    ],
+    "languages": [
+      {
+        "id": "sql",
+        "extensions": [
+          ".sql"
+        ],
+        "aliases": [
+          "SQL"
+        ],
+        "configuration": "./syntaxes/sql.configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "scopeName": "pgsql.injection",
+        "path": "./syntaxes/pg.source.json",
+        "injectTo": [
+          "source.sql"
+        ]
+      }
+    ],
+    "snippets": [
+      {
+        "language": "sql",
+        "path": "./snippets/pgsql.json"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "pgsql.copilot.editorSubmenu",
+        "title": "%pgsql.copilot.editorSubmenu%",
+        "label": "%pgsql.copilot.editorSubmenu%"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "pgsql.runQuery",
+          "when": "editorLangId == sql && !isInDiffEditor",
+          "group": "navigation@1"
+        },
+        {
+          "command": "pgsql.cancelQuery",
+          "when": "editorLangId == sql && !isInDiffEditor && resourcePath in pgsql.runningQueries",
+          "group": "navigation@2"
+        },
+        {
+          "command": "pgsql.copilot.chatWithEditor",
+          "when": "editorLangId == sql && !isInDiffEditor && resource in pgsql.connections && config.pgsql.copilot.enable && pgsql.copilot.isGHCInstalled",
+          "group": "navigation@2"
+        },
+        {
+          "command": "pgsql.revealQueryResultPanel",
+          "when": "editorLangId == sql && !isInDiffEditor && view.queryResult.visible == false",
+          "group": "navigation@2"
+        },
+        {
+          "command": "pgsql.connect",
+          "when": "editorLangId == sql && !isInDiffEditor && resource not in pgsql.connections",
+          "group": "navigation@3"
+        },
+        {
+          "command": "pgsql.disconnect",
+          "when": "editorLangId == sql && !isInDiffEditor && resource in pgsql.connections",
+          "group": "navigation@3"
+        },
+        {
+          "command": "pgsql.changeDatabase",
+          "when": "editorLangId == sql && !isInDiffEditor",
+          "group": "navigation@4"
+        },
+        {
+          "command": "pgsql.showExecutionPlanInResults",
+          "when": "editorLangId == sql && !isInDiffEditor && config.pgsql.TODO-PG",
+          "group": "navigation@4"
+        },
+        {
+          "command": "pgsql.enableActualPlan",
+          "when": "editorLangId == sql && !isInDiffEditor && !(resource in pgsql.executionPlan.urisWithActualPlanEnabled)",
+          "group": "navigation@5"
+        },
+        {
+          "command": "pgsql.disableActualPlan",
+          "when": "editorLangId == sql && !isInDiffEditor && resource in pgsql.executionPlan.urisWithActualPlanEnabled",
+          "group": "navigation@5"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "pgsql.runQuery",
+          "when": "editorLangId == sql"
+        },
+        {
+          "command": "pgsql.psqlRunFile",
+          "when": "editorLangId == sql"
+        },
+        {
+          "submenu": "pgsql.copilot.editorSubmenu",
+          "when": "editorLangId == sql && config.pgsql.copilot.enable && pgsql.copilot.isGHCInstalled"
+        }
+      ],
+      "pgsql.copilot.editorSubmenu": [
+        {
+          "command": "pgsql.copilot.explainQuery",
+          "when": "editorLangId == sql && pgsql.copilot.isGHCInstalled && config.pgsql.copilot.enable",
+          "title": "%pgsql.copilot.explainQuery%",
+          "group": "navigation@1"
+        },
+        {
+          "command": "pgsql.copilot.rewriteQuery",
+          "when": "editorLangId == sql && pgsql.copilot.isGHCInstalled && config.pgsql.copilot.enable",
+          "title": "%pgsql.copilot.rewriteQuery%",
+          "group": "navigation@2"
+        },
+        {
+          "command": "pgsql.copilot.analyzeQueryPerformance",
+          "when": "editorLangId == sql && pgsql.copilot.isGHCInstalled && config.pgsql.copilot.enable",
+          "title": "%pgsql.copilot.analyzeQueryPerformance%",
+          "group": "navigation@3"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "pgsql.createServerGroup",
+          "when": "view == pg-objectExplorer",
+          "title": "%pgsql.createServerGroup%",
+          "group": "navigation@1"
+        },
+        {
+          "command": "pgsql.addNewConnection",
+          "when": "view == pg-objectExplorer",
+          "title": "%pgsql.addNewConnection%",
+          "group": "navigation@2"
+        },
+        {
+          "command": "pgsql.createNewServer",
+          "when": "view == pg-objectExplorer",
+          "title": "%pgsql.createNewServer%",
+          "group": "navigation@3"
+        },
+        {
+          "command": "pgsql.objectExplorerShowOnlyConnected",
+          "when": "view == pg-objectExplorer && !pgObjectExplorer.showOnlyConnected",
+          "title": "%pgsql.objectExplorerShowOnlyConnected%",
+          "group": "navigation@4"
+        },
+        {
+          "command": "pgsql.objectExplorerShowAllServers",
+          "when": "view == pg-objectExplorer && pgObjectExplorer.showOnlyConnected",
+          "title": "%pgsql.objectExplorerShowAllServers%",
+          "group": "navigation@4"
+        },
+        {
+          "command": "pgsql.startQueryHistoryCapture",
+          "when": "view == pg-queryHistory && config.pgsql.enableQueryHistoryFeature && !config.pgsql.enableQueryHistoryCapture",
+          "title": "%pgsql.startQueryHistoryCapture%",
+          "group": "navigation@1"
+        },
+        {
+          "command": "pgsql.pauseQueryHistoryCapture",
+          "when": "view == pg-queryHistory && config.pgsql.enableQueryHistoryFeature && config.pgsql.enableQueryHistoryCapture",
+          "title": "%pgsql.pauseQueryHistoryCapture%",
+          "group": "navigation@1"
+        },
+        {
+          "command": "pgsql.clearAllQueryHistory",
+          "when": "view == pg-queryHistory",
+          "title": "%pgsql.clearAllQueryHistory%",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "pgsql.addNewConnection",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(ServerGroup)\\b/",
+          "group": "PG_SQL_A@1"
+        },
+        {
+          "command": "pgsql.createNewServer",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(ServerGroup)\\b/",
+          "group": "PG_SQL_A@2"
+        },
+        {
+          "command": "pgsql.editServerGroup",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(ServerGroup)\\b/",
+          "group": "PG_SQL_B@2"
+        },
+        {
+          "command": "pgsql.editServerGroup",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(ServerGroup)\\b/",
+          "group": "inline"
+        },
+        {
+          "command": "pgsql.deleteServerGroup",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(ServerGroup)\\b/",
+          "group": "PG_SQL_B@3"
+        },
+        {
+          "command": "pgsql.objectExplorerNewQuery",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(Database)\\b/",
+          "group": "PG_SQL_A@1"
+        },
+        {
+          "command": "pgsql.copilot.chatWithDatabase",
+          "when": "config.pgsql.copilot.enable && pgsql.copilot.isGHCInstalled && view == pg-objectExplorer && viewItem =~ /\\btype=(Database)\\b/",
+          "group": "PG_SQL_A@2"
+        },
+        {
+          "command": "pgsql.copilot.connectDatabaseInAgentMode",
+          "when": "config.pgsql.copilot.enable && pgsql.copilot.isGHCInstalled && view == pg-objectExplorer && viewItem =~ /\\btype=(Database)\\b/",
+          "group": "PG_SQL_A@2"
+        },
+        {
+          "command": "pgsql.psqlTerminalDatabase",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(Database)\\b/",
+          "group": "PG_SQL_A@3"
+        },
+        {
+          "command": "pgsql.visualizeSchema",
+          "when": "view === pg-objectExplorer && viewItem =~ /\\btype=(Database)\\b/",
+          "group": "PG_SQL_A@4"
+        },
+        {
+          "command": "pgsql.editConnection",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(disconnectedServer|Server)\\b/",
+          "group": "PG_SQL_B@1"
+        },
+        {
+          "command": "pgsql.disconnectObjectExplorerNode",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(Server)\\b/",
+          "group": "PG_SQL_B@2"
+        },
+        {
+          "command": "pgsql.removeObjectExplorerNode",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(disconnectedServer|Server)\\b/",
+          "group": "PG_SQL_B@3"
+        },
+        {
+          "command": "pgsql.editConnection",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(disconnectedServer|Server)\\b/",
+          "group": "inline"
+        },
+        {
+          "command": "pgsql.refreshObjectExplorerNode",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(?!(?:disconnectedServer|ServerGroup)\\b)[^,]+/ ",
+          "group": "PG_SQL_C@1"
+        },
+        {
+          "command": "pgsql.scriptSelect",
+          "when": "view == pg-objectExplorer && viewItem =~  /\\btype=(Table|View)\\b/",
+          "group": "PG_SQL@1"
+        },
+        {
+          "command": "pgsql.scriptCreate",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(Table|View|AggregateFunction|PartitionFunction|ScalarValuedFunction|Schema|StoredProcedure|TableValuedFunction|User|UserDefinedTableType|Trigger|DatabaseTrigger|Index|Key|User|DatabaseRole|ApplicationRole)\\b/",
+          "group": "PG_SQL@2"
+        },
+        {
+          "command": "pgsql.scriptDelete",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(Table|View|AggregateFunction|PartitionFunction|ScalarValuedFunction|Schema|StoredProcedure|TableValuedFunction|User|UserDefinedTableType|Trigger|DatabaseTrigger|Index|Key|User|DatabaseRole|ApplicationRole)\\b/",
+          "group": "PG_SQL@3"
+        },
+        {
+          "command": "pgsql.scriptExecute",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(TODO-PG)\\b/",
+          "group": "PG_SQL@5"
+        },
+        {
+          "command": "pgsql.scriptAlter",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(TODO-PG)\\b/",
+          "group": "PG_SQL@4"
+        },
+        {
+          "command": "pgsql.copyObjectName",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(?!Folder\\b)[^,]+/",
+          "group": "PG_SQL_C@2"
+        },
+        {
+          "command": "pgsql.openQueryHistory",
+          "when": "view == pg-queryHistory && viewItem == queryHistoryNode",
+          "group": "PG_SQL@1"
+        },
+        {
+          "command": "pgsql.runQueryHistory",
+          "when": "view == pg-queryHistory && viewItem == queryHistoryNode",
+          "group": "PG_SQL@2"
+        },
+        {
+          "command": "pgsql.copyQueryHistory",
+          "when": "view == pg-queryHistory && viewItem == queryHistoryNode",
+          "group": "PG_SQL@2"
+        },
+        {
+          "command": "pgsql.deleteQueryHistory",
+          "when": "view == pg-queryHistory && viewItem == queryHistoryNode",
+          "group": "PG_SQL@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "pgsql.objectExplorerNewQuery",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(disconnectedServer|Server|Database)\\b/"
+        },
+        {
+          "command": "pgsql.copilot.chatWithDatabase",
+          "when": "config.pgsql.copilot.enable && pgsql.copilot.isGHCInstalled && view == pg-objectExplorer && viewItem =~ /\\btype=(Database)\\b/"
+        },
+        {
+          "command": "pgsql.copilot.connectDatabaseInAgentMode",
+          "when": "config.pgsql.copilot.enable && pgsql.copilot.isGHCInstalled && view == pg-objectExplorer && viewItem =~ /\\btype=(Database)\\b/"
+        },
+        {
+          "command": "pgsql.removeObjectExplorerNode",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(disconnectedServer|Server)\\b/"
+        },
+        {
+          "command": "pgsql.refreshObjectExplorerNode",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(?!(?:disconnectedServer)\b)[^,]+/"
+        },
+        {
+          "command": "pgsql.scriptSelect",
+          "when": "view == pg-objectExplorer && viewItem =~  /\\btype=(Table|View)\\b/"
+        },
+        {
+          "command": "pgsql.scriptCreate",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(Table|View|AggregateFunction|PartitionFunction|ScalarValuedFunction|Schema|StoredProcedure|TableValuedFunction|User|UserDefinedTableType|Trigger|DatabaseTrigger|Index|Key|User|DatabaseRole|ApplicationRole)\\b/"
+        },
+        {
+          "command": "pgsql.scriptDelete",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(Table|View|AggregateFunction|PartitionFunction|ScalarValuedFunction|Schema|StoredProcedure|TableValuedFunction|User|UserDefinedTableType|Trigger|DatabaseTrigger|Index|Key|User|DatabaseRole|ApplicationRole)\\b/"
+        },
+        {
+          "command": "pgsql.scriptExecute",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(StoredProcedure)\\b/"
+        },
+        {
+          "command": "pgsql.scriptAlter",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(AggregateFunction|PartitionFunction|ScalarValuedFunction|StoredProcedure|TableValuedFunction|View)\\b/"
+        },
+        {
+          "command": "pgsql.disconnectObjectExplorerNode",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(Server)\\b/"
+        },
+        {
+          "command": "pgsql.startQueryHistoryCapture",
+          "when": "config.pgsql.enableQueryHistoryFeature && !config.pgsql.enableQueryHistoryCapture"
+        },
+        {
+          "command": "pgsql.pauseQueryHistoryCapture",
+          "when": "config.pgsql.enableQueryHistoryFeature && config.pgsql.enableQueryHistoryCapture"
+        },
+        {
+          "command": "pgsql.copyObjectName",
+          "when": "view == pg-objectExplorer && viewItem =~ /\\btype=(?!Folder\\b)[^,]+/"
+        },
+        {
+          "command": "pgsql.runQueryHistory",
+          "when": "view == pg-queryHistory && viewItem == queryHistoryNode"
+        },
+        {
+          "command": "pgsql.copyQueryHistory",
+          "when": "view == pg-queryHistory && viewItem == queryHistoryNode"
+        },
+        {
+          "command": "pgsql.editServerGroup",
+          "when": "false"
+        },
+        {
+          "command": "pgsql.deleteServerGroup",
+          "when": "false"
+        },
+        {
+          "command": "pgsql.deleteQueryHistory",
+          "when": "view == pg-queryHistory && viewItem == queryHistoryNode"
+        },
+        {
+          "command": "pgsql.addNewConnection"
+        },
+        {
+          "command": "pgsql.createNewServer"
+        },
+        {
+          "command": "pgsql.createDockerServer"
+        },
+        {
+          "command": "pgsql.editConnection"
+        },
+        {
+          "command": "pgsql.copyAll",
+          "when": "false"
+        },
+        {
+          "command": "pgsql.newTable",
+          "when": "false"
+        }
+      ],
+      "webview/context": [
+        {
+          "command": "pgsql.copyAll",
+          "when": "webviewSection == 'queryResultMessagesPane'"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "pgsql.editServerGroup",
+        "title": "%pgsql.editServerGroup%",
+        "category": "PGSQL",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "pgsql.createServerGroup",
+        "title": "%pgsql.createServerGroup%",
+        "category": "PGSQL",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "pgsql.deleteServerGroup",
+        "title": "%pgsql.removeObjectExplorerNode%",
+        "category": "PGSQL",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "pgsql.showExtensionLogs",
+        "title": "%pgsql.showExtensionLogs%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.showToolsServiceLogs",
+        "title": "%pgsql.showToolsServiceLogs%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.runQuery",
+        "title": "%pgsql.runQuery%",
+        "category": "PGSQL",
+        "icon": "$(debug-start)"
+      },
+      {
+        "command": "pgsql.runCurrentStatement",
+        "title": "%pgsql.runCurrentStatement%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.cancelQuery",
+        "title": "%pgsql.cancelQuery%",
+        "category": "PGSQL",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "pgsql.copyAll",
+        "title": "%pgsql.copyAll%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.revealQueryResultPanel",
+        "title": "%pgsql.revealQueryResultPanel%",
+        "category": "PGSQL",
+        "icon": "media/revealQueryResult.svg"
+      },
+      {
+        "command": "pgsql.connect",
+        "title": "%pgsql.connect%",
+        "category": "PGSQL",
+        "icon": {
+          "dark": "media/connect_dark.svg",
+          "light": "media/connect_light.svg"
+        }
+      },
+      {
+        "command": "pgsql.disconnect",
+        "title": "%pgsql.disconnect%",
+        "category": "PGSQL",
+        "icon": "$(debug-disconnect)"
+      },
+      {
+        "command": "pgsql.changeDatabase",
+        "title": "%pgsql.changeDatabase%",
+        "category": "PGSQL",
+        "icon": {
+          "dark": "media/changeConnection_dark.svg",
+          "light": "media/changeConnection_light.svg"
+        }
+      },
+      {
+        "command": "pgsql.chooseDatabase",
+        "title": "%pgsql.chooseDatabase%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.chooseLanguageFlavor",
+        "title": "%pgsql.chooseLanguageFlavor%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.showGettingStarted",
+        "title": "%pgsql.showGettingStarted%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.newQuery",
+        "title": "%pgsql.newQuery%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.rebuildIntelliSenseCache",
+        "title": "%pgsql.rebuildIntelliSenseCache%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.addNewConnection",
+        "title": "%pgsql.addNewConnection%",
+        "category": "PGSQL",
+        "icon": {
+          "light": "media/addNewConnection_light.svg",
+          "dark": "media/addNewConnection_dark.svg"
+        }
+      },
+      {
+        "command": "pgsql.createNewServer",
+        "title": "%pgsql.createNewServer%",
+        "category": "PGSQL",
+        "icon": {
+          "light": "media/createNewServer_light.svg",
+          "dark": "media/createNewServer_dark.svg"
+        }
+      },
+      {
+        "command": "pgsql.createDockerServer",
+        "title": "%pgsql.createDockerServer%",
+        "category": "PGSQL",
+        "icon": "$(database)"
+      },
+      {
+        "command": "pgsql.objectExplorerNewQuery",
+        "title": "%pgsql.objectExplorerNewQuery%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.removeObjectExplorerNode",
+        "title": "%pgsql.removeObjectExplorerNode%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.editConnection",
+        "title": "%pgsql.editConnection%",
+        "category": "PGSQL",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "pgsql.refreshObjectExplorerNode",
+        "title": "%pgsql.refreshObjectExplorerNode%",
+        "category": "PGSQL",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "pgsql.disconnectObjectExplorerNode",
+        "title": "%pgsql.disconnect%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.scriptSelect",
+        "title": "%pgsql.scriptSelect%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.scriptCreate",
+        "title": "%pgsql.scriptCreate%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.scriptDelete",
+        "title": "%pgsql.scriptDelete%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.scriptExecute",
+        "title": "%pgsql.scriptExecute%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.newTable",
+        "title": "%pgsql.newTable%",
+        "category": "PGSQL",
+        "icon": {
+          "dark": "media/newTable_dark.svg",
+          "light": "media/newTable_light.svg"
+        }
+      },
+      {
+        "command": "pgsql.scriptAlter",
+        "title": "%pgsql.scriptAlter%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.openQueryHistory",
+        "title": "%pgsql.openQueryHistory%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.runQueryHistory",
+        "title": "%pgsql.runQueryHistory%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.copyQueryHistory",
+        "title": "%pgsql.copyQueryHistory%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.deleteQueryHistory",
+        "title": "%pgsql.deleteQueryHistory%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.clearAllQueryHistory",
+        "title": "%pgsql.clearAllQueryHistory%",
+        "category": "PGSQL",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "pgsql.startQueryHistoryCapture",
+        "title": "%pgsql.startQueryHistoryCapture%",
+        "category": "PGSQL",
+        "icon": "$(debug-start)"
+      },
+      {
+        "command": "pgsql.pauseQueryHistoryCapture",
+        "title": "%pgsql.pauseQueryHistoryCapture%",
+        "category": "PGSQL",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "pgsql.commandPaletteQueryHistory",
+        "title": "%pgsql.commandPaletteQueryHistory%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.copyObjectName",
+        "title": "%pgsql.copyObjectName%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.addAadAccount",
+        "title": "%pgsql.addAadAccount%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.removeAadAccount",
+        "title": "%pgsql.removeAadAccount%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.clearAzureAccountTokenCache",
+        "title": "%pgsql.clearAzureAccountTokenCache%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.userFeedback",
+        "title": "%pgsql.userFeedback%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.showExecutionPlanInResults",
+        "title": "%pgsql.showExecutionPlanInResults%",
+        "category": "PGSQL",
+        "icon": {
+          "dark": "media/executionPlan_dark.svg",
+          "light": "media/executionPlan_light.svg"
+        }
+      },
+      {
+        "command": "pgsql.enableActualPlan",
+        "title": "%pgsql.enableActualPlan%",
+        "category": "PGSQL",
+        "icon": {
+          "dark": "media/enableActualExecutionPlan_dark.svg",
+          "light": "media/enableActualExecutionPlan_light.svg"
+        }
+      },
+      {
+        "command": "pgsql.disableActualPlan",
+        "title": "%pgsql.disableActualPlan%",
+        "category": "PGSQL",
+        "icon": {
+          "dark": "media/disableActualExecutionPlan_dark.svg",
+          "light": "media/disableActualExecutionPlan_light.svg"
+        }
+      },
+      {
+        "command": "pgsql.psqlTerminalDatabase",
+        "title": "%pgsql.psqlTerminalDatabase%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.psqlRunFile",
+        "title": "%pgsql.psqlRunFile%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.copilot.explainQuery",
+        "title": "%pgsql.copilot.explainQuery%",
+        "when": "config.pgsql.copilot.enable",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.copilot.analyzeQueryPerformance",
+        "title": "%pgsql.copilot.analyzeQueryPerformance%",
+        "when": "config.pgsql.copilot.enable",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.copilot.rewriteQuery",
+        "title": "%pgsql.copilot.rewriteQuery%",
+        "when": "config.pgsql.copilot.enable",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.copilot.chatWithDatabase",
+        "title": "%pgsql.copilot.chatWithDatabase%",
+        "category": "PGSQL",
+        "when": "config.pgsql.copilot.enable",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "pgsql.copilot.connectDatabaseInAgentMode",
+        "title": "%pgsql.copilot.connectDatabaseInAgentMode%",
+        "category": "PGSQL",
+        "when": "config.pgsql.copilot.enable",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "pgsql.copilot.chatWithEditor",
+        "title": "%pgsql.copilot.chatWithEditor%",
+        "category": "PGSQL",
+        "when": "config.pgsql.copilot.enable",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "pgsql.visualizeSchema",
+        "title": "%pgsql.visualizeSchema%",
+        "category": "PGSQL"
+      },
+      {
+        "command": "pgsql.objectExplorerShowOnlyConnected",
+        "title": "%pgsql.objectExplorerShowOnlyConnected%",
+        "category": "PGSQL",
+        "icon": {
+          "dark": "media/connectedFilterOff_dark.svg",
+          "light": "media/connectedFilterOff_light.svg"
+        }
+      },
+      {
+        "command": "pgsql.objectExplorerShowAllServers",
+        "title": "%pgsql.objectExplorerShowAllServers%",
+        "category": "PGSQL",
+        "icon": {
+          "dark": "media/connectedFilterOn_dark.svg",
+          "light": "media/connectedFilterOn_light.svg"
+        }
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "pgsql.runQuery",
+        "key": "ctrl+shift+e",
+        "mac": "cmd+shift+e",
+        "when": "editorTextFocus && editorLangId == 'sql'"
+      },
+      {
+        "command": "pgsql.runQuery",
+        "key": "shift+enter",
+        "when": "editorTextFocus && editorLangId == 'sql'"
+      },
+      {
+        "command": "pgsql.connect",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c",
+        "when": "editorTextFocus && editorLangId == 'sql'"
+      },
+      {
+        "command": "pgsql.disconnect",
+        "key": "ctrl+shift+d",
+        "mac": "cmd+shift+d",
+        "when": "editorTextFocus && editorLangId == 'sql'"
+      },
+      {
+        "command": "workbench.view.extension.objectExplorer",
+        "key": "ctrl+alt+d",
+        "mac": "cmd+alt+d"
+      },
+      {
+        "command": "pgsql.copyObjectName",
+        "key": "ctrl+c",
+        "mac": "cmd+c",
+        "when": "sideBarFocus && activeViewlet == workbench.view.extension.objectExplorer"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "%pgsql.Configuration%",
+      "properties": {
+        "pgsql.enableExperimentalFeatures": {
+          "type": "boolean",
+          "default": false,
+          "description": "%pgsql.enableExperimentalFeatures.description%",
+          "scope": "application"
+        },
+        "pgsql.showConnectionStatusLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pgsql.showConnectionStatusLens.description%",
+          "scope": "application"
+        },
+        "pgsql.openQueryResultsInTabByDefault": {
+          "type": "boolean",
+          "default": false,
+          "description": "%pgsql.openQueryResultsInTabByDefault.description%",
+          "scope": "application"
+        },
+        "pgsql.openQueryResultsInTabByDefaultDoNotShowPrompt": {
+          "type": "boolean",
+          "default": false,
+          "description": "%pgsql.openQueryResultsInTabByDefaultDoNotShowPrompt.description%",
+          "scope": "application"
+        },
+        "azureResourceGroups.selectedSubscriptions": {
+          "type": "array",
+          "description": "%pgsql.selectedSubscriptions%",
+          "items": {
+            "type": "string"
+          },
+          "$comment": "This setting must be registered in case the user does not have the Azure Resource Groups extension installed.  All extensions using this configuration must register this setting."
+        },
+        "pgsql.azureActiveDirectory": {
+          "type": "string",
+          "default": "AuthCodeGrant",
+          "description": "%pgsql.chooseAuthMethod%",
+          "enum": [
+            "AuthCodeGrant",
+            "DeviceCode"
+          ],
+          "enumDescriptions": [
+            "%pgsql.authCodeGrant.description%",
+            "%pgsql.deviceCode.description%"
+          ],
+          "scope": "application"
+        },
+        "pgsql.shortcuts": {
+          "type": "object",
+          "description": "%pgsql.shortcuts%",
+          "default": {
+            "_comment": "Short cuts must follow the format (ctrl)+(shift)+(alt)+[key]",
+            "event.toggleResultPane": "ctrl+alt+R",
+            "event.focusResultsGrid": "ctrl+alt+G",
+            "event.toggleMessagePane": "ctrl+alt+Y",
+            "event.prevGrid": "ctrl+up",
+            "event.nextGrid": "ctrl+down",
+            "event.copySelection": "ctrl+C",
+            "event.copyWithHeaders": "",
+            "event.copyAllHeaders": "",
+            "event.maximizeGrid": "",
+            "event.selectAll": "ctrl+A",
+            "event.saveAsJSON": "",
+            "event.saveAsCSV": "",
+            "event.saveAsExcel": "",
+            "event.changeColumnWidth": "ctrl+alt+S"
+          },
+          "scope": "resource"
+        },
+        "pgsql.saveAsCsv.lineSeparator": {
+          "type": "string",
+          "description": "%pgsql.saveAsCsv.lineSeparator%",
+          "default": null,
+          "scope": "resource"
+        },
+        "pgsql.saveAsCsv.textIdentifier": {
+          "type": "string",
+          "description": "%pgsql.saveAsCsv.textIdentifier%",
+          "default": "\"",
+          "scope": "resource"
+        },
+        "pgsql.saveAsCsv.encoding": {
+          "type": "string",
+          "description": "%pgsql.saveAsCsv.encoding%",
+          "default": "utf-8",
+          "scope": "resource"
+        },
+        "pgsql.tracingLevel": {
+          "type": "string",
+          "description": "%pgsql.tracingLevel%",
+          "default": "All",
+          "enum": [
+            "All",
+            "Off",
+            "Critical",
+            "Error",
+            "Warning",
+            "Information",
+            "Verbose"
+          ]
+        },
+        "pgsql.piiLogging": {
+          "type": "boolean",
+          "default": false,
+          "description": "%pgsql.piiLogging%"
+        },
+        "pgsql.queryHistoryLimit": {
+          "type": "number",
+          "default": 20,
+          "description": "%pgsql.queryHistoryLimit%",
+          "scope": "window"
+        },
+        "pgsql.objectExplorer.expandTimeout": {
+          "type": "number",
+          "default": 45,
+          "minimum": 1,
+          "description": "%pgsql.objectExplorer.expandTimeout%"
+        },
+        "pgsql.logDebugInfo": {
+          "type": "boolean",
+          "default": false,
+          "description": "%pgsql.logDebugInfo%",
+          "scope": "window"
+        },
+        "pgsql.maxRecentConnections": {
+          "type": "number",
+          "default": 5,
+          "description": "%pgsql.maxRecentConnections%",
+          "scope": "window"
+        },
+        "pgsql.maxConnections": {
+          "type": "number",
+          "default": 10,
+          "markdownDescription": "%pgsql.maxConnections%",
+          "scope": "resource"
+        },
+        "pgsql.serverGroups": {
+          "type": "array",
+          "description": "%pgsql.serverGroups%",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "%pgsql.serverGroup.name%"
+              },
+              "id": {
+                "type": "string",
+                "description": "%pgsql.serverGroup.id%"
+              },
+              "color": {
+                "type": [
+                  "string",
+                  null
+                ],
+                "description": "%pgsql.serverGroup.color%"
+              },
+              "description": {
+                "type": [
+                  "string",
+                  null
+                ],
+                "description": "%pgsql.serverGroup.description%"
+              }
+            }
+          }
+        },
+        "pgsql.connections": {
+          "$comment": "TODO-PG: these are the real connection attributes, but be wary of host/dbname. Reconcile with the definition added above in the mssql section",
+          "type": "array",
+          "description": "%pgsql.connections%",
+          "items": {
+            "type": "object",
+            "properties": {
+              "profileName": {
+                "type": "string",
+                "description": "%pgsql.connection.profileName%"
+              },
+              "id": {
+                "type": "string",
+                "description": "%pgsql.connection.id%"
+              },
+              "groupId": {
+                "type": "string",
+                "description": "%pgsql.connection.groupId%"
+              },
+              "server": {
+                "$comment": "This maps to `host`",
+                "type": "string",
+                "default": "{{put-server-name-here}}",
+                "description": "%pgsql.connection.host%"
+              },
+              "database": {
+                "$comment": "This maps to `dbname`",
+                "type": "string",
+                "default": "{{put-database-name-here}}",
+                "description": "%pgsql.connection.dbname%"
+              },
+              "authenticationType": {
+                "$comment": "TODO-PG: To be used for Entra auth in the future",
+                "type": "string",
+                "default": "SqlLogin",
+                "enum": [
+                  "Integrated",
+                  "SqlLogin",
+                  "AzureMFA"
+                ],
+                "description": "%pgsql.connection.authenticationType%"
+              },
+              "user": {
+                "type": "string",
+                "default": "{{put-username-here}}",
+                "description": "%pgsql.connection.user%"
+              },
+              "password": {
+                "type": "string",
+                "default": "{{put-password-here}}",
+                "description": "%pgsql.connection.password%"
+              },
+              "emptyPasswordInput": {
+                "type": "boolean",
+                "description": "%pgsql.connection.emptyPasswordInput%"
+              },
+              "port": {
+                "type": "string",
+                "default": "5432",
+                "description": "%pgsql.connection.port%"
+              },
+              "hostaddr": {
+                "type": "string",
+                "default": "{{put-hostaddr-here}}",
+                "description": "%pgsql.connection.hostaddr%"
+              },
+              "connectTimeout": {
+                "type": "number",
+                "default": 15,
+                "description": "%pgsql.connection.connectTimeout%"
+              },
+              "clientEncoding": {
+                "type": "string",
+                "default": "{{put-clientEncoding-here}}",
+                "description": "%pgsql.connection.clientEncoding%"
+              },
+              "options": {
+                "type": "string",
+                "default": "{{put-Command-line options-here}}",
+                "description": "%pgsql.connection.options%"
+              },
+              "applicationName": {
+                "type": "string",
+                "default": "{{put-applicationName-here}}",
+                "description": "%pgsql.connection.applicationName%"
+              },
+              "sslmode": {
+                "type": "string",
+                "default": "prefer",
+                "description": "%pgsql.connection.sslmode%"
+              },
+              "sslcompression": {
+                "type": "boolean",
+                "default": "{{put-sslcompression-here}}",
+                "description": "%pgsql.connection.sslcompression%"
+              },
+              "sslcert": {
+                "type": "string",
+                "default": "{{put-sslcert-here}}",
+                "description": "%pgsql.connection.sslcert%"
+              },
+              "sslkey": {
+                "type": "string",
+                "default": "{{put-sslkey-here}}",
+                "description": "%pgsql.connection.sslkey%"
+              },
+              "sslrootcert": {
+                "type": "string",
+                "default": "{{put-sslrootcert-here}}",
+                "description": "%pgsql.connection.sslrootcert%"
+              },
+              "sslcrl": {
+                "type": "string",
+                "default": "{{put-sslcrl-here}}",
+                "description": "%pgsql.connection.sslcrl%"
+              },
+              "requirepeer": {
+                "type": "string",
+                "default": "{{put-requirepeer-here}}",
+                "description": "%pgsql.connection.requirepeer%"
+              },
+              "service": {
+                "type": "string",
+                "default": "{{put-service-here}}",
+                "description": "%pgsql.connection.service%"
+              }
+            }
+          },
+          "scope": "resource"
+        },
+        "pgsql.messagesDefaultOpen": {
+          "type": "boolean",
+          "description": "%pgsql.messagesDefaultOpen%",
+          "default": true,
+          "scope": "resource"
+        },
+        "pgsql.resultsFontFamily": {
+          "type": "string",
+          "description": "%pgsql.resultsFontFamily%",
+          "default": null,
+          "scope": "resource"
+        },
+        "pgsql.resultsFontSize": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "maximum": 24,
+          "description": "%pgsql.resultsFontSize%",
+          "default": null,
+          "scope": "resource"
+        },
+        "pgsql.saveAsCsv.delimiter": {
+          "type": "string",
+          "description": "%pgsql.saveAsCsv.delimiter%",
+          "default": ",",
+          "scope": "resource"
+        },
+        "pgsql.saveAsCsv.includeHeaders": {
+          "type": "boolean",
+          "description": "%pgsql.saveAsCsv.includeHeaders%",
+          "default": true,
+          "scope": "resource"
+        },
+        "pgsql.copyIncludeHeaders": {
+          "type": "boolean",
+          "description": "%pgsql.copyIncludeHeaders%",
+          "default": false,
+          "scope": "resource"
+        },
+        "pgsql.copyRemoveNewLine": {
+          "type": "boolean",
+          "description": "%pgsql.copyRemoveNewLine%",
+          "default": true,
+          "scope": "resource"
+        },
+        "pgsql.showBatchTime": {
+          "type": "boolean",
+          "description": "%pgsql.showBatchTime%",
+          "default": false,
+          "scope": "resource"
+        },
+        "pgsql.splitPaneSelection": {
+          "type": "string",
+          "description": "%pgsql.splitPaneSelection%",
+          "default": "next",
+          "enum": [
+            "next",
+            "current",
+            "end"
+          ],
+          "scope": "resource"
+        },
+        "pgsql.applyLocalization": {
+          "type": "boolean",
+          "description": "%pgsql.applyLocalization%",
+          "default": false,
+          "scope": "window"
+        },
+        "pgsql.intelliSense.enableIntelliSense": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pgsql.intelliSense.enableIntelliSense%",
+          "scope": "window"
+        },
+        "pgsql.persistQueryResultTabs": {
+          "type": "boolean",
+          "default": false,
+          "description": "%pgsql.persistQueryResultTabs%",
+          "scope": "window"
+        },
+        "pgsql.enableQueryHistoryFeature": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pgsql.enableQueryHistoryFeature%",
+          "scope": "window"
+        },
+        "pgsql.enableQueryHistoryCapture": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pgsql.enableQueryHistoryCapture%",
+          "scope": "window"
+        },
+        "pgsql.resultsGrid.autoSizeColumns": {
+          "type": "boolean",
+          "default": true,
+          "description": "%pgsql.resultsGrid.autoSizeColumns%"
+        },
+        "pgsql.pgBinaryDirs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "%pgsql.pgBinaryDirs%"
+          },
+          "description": "%pgsql.pgBinaryDirs%"
+        },
+        "pgsql.copilot.enable": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "%pgsql.copilot.enable%",
+          "scope": "window",
+          "tags": [
+            "experimental"
+          ],
+          "order": 0
+        },
+        "pgsql.copilot.accessMode": {
+          "type": "string",
+          "default": "rw",
+          "markdownDescription": "%pgsql.copilot.accessMode%",
+          "enum": [
+            "ro",
+            "rw"
+          ],
+          "markdownEnumDescriptions": [
+            "%pgsql.copilot.accessMode.readOnly%",
+            "%pgsql.copilot.accessMode.readWrite%"
+          ],
+          "enumItemLabels": [
+            "Read Only",
+            "Read/Write"
+          ],
+          "scope": "window",
+          "tags": [
+            "experimental"
+          ],
+          "order": 1
+        },
+        "pgsql.copilot.modelOptions": {
+          "type": "object",
+          "properties": {
+            "max_tokens": {
+              "type": "number",
+              "default": 10000
+            },
+            "temperature": {
+              "type": "number",
+              "default": 0.7
+            },
+            "top_p": {
+              "type": "number",
+              "default": 0.8
+            }
+          },
+          "additionalProperties": true,
+          "markdownDescription": "%pgsql.copilot.modelOptions%",
+          "scope": "window",
+          "tags": [
+            "experimental"
+          ],
+          "order": 2
+        }
+      }
+    },
+    "chatParticipants": [
+      {
+        "name": "pgsql",
+        "description": "Helps you query, explore, and interact with PostgreSQL databases.",
+        "id": "vscode-postgresql.chat-agent",
+        "isSticky": true,
+        "disambiguation": [
+          {
+            "category": "databases",
+            "description": "The user wants help with their PostgreSQL database.",
+            "examples": [
+              "What is in my database?",
+              "Write a query that tells me how many rows are in the table.",
+              "How can I make this query faster?"
+            ]
+          }
+        ],
+        "when": "config.pgsql.copilot.enable && pgsql.copilot.isGHCInstalled"
+      }
+    ],
+    "languageModelTools": [
+      {
+        "name": "pgsql_list_servers",
+        "modelDescription": "List all database servers registered with the PGSQL extension. Returns a list of objects with the server name, host name, and default database.",
+        "tags": [
+          "databases",
+          "postgresql",
+          "pgsql"
+        ],
+        "canBeReferencedInPrompt": true,
+        "displayName": "List Servers",
+        "toolReferenceName": "pgsql_listServers",
+        "userDescription": "List all database servers registered with the PGSQL extension.",
+        "icon": "$(server)"
+      },
+      {
+        "name": "pgsql_connect",
+        "modelDescription": "Connect to a PostgreSQL database server using a server name and optional database name. The server name is retrieved from pgsql_listServers. Returns a connection ID that is used to interact with the database with other pgsql tools. If a specific database is given and the connection fails, use $pgsql_list_databases against a connection to the default database to find the correct database name. The connection ID is a string formatted as 'pgsql/{server name}[/{database name}]', where if no database name is present it's the default database for the server.",
+        "tags": [
+          "databases",
+          "postgresql",
+          "pgsql"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "serverName": {
+              "description": "Server name. Ensure this is validated with a call to pgsql_list_servers.",
+              "title": "Server Name",
+              "type": "string"
+            },
+            "database": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "Optional database name; if omitted, uses the server's default database.",
+              "title": "Database Name"
+            }
+          },
+          "required": [
+            "serverName"
+          ]
+        },
+        "canBeReferencedInPrompt": true,
+        "displayName": "Connect to PostgreSQL Database",
+        "toolReferenceName": "pgsql_connect",
+        "userDescription": "Connect to a PostgreSQL server.",
+        "icon": "$(plug)"
+      },
+      {
+        "name": "pgsql_disconnect",
+        "modelDescription": "Disconnect from a PostgreSQL database server using a connection ID. ",
+        "tags": [
+          "databases",
+          "postgresql",
+          "pgsql"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "connectionId": {
+              "description": "Connection ID to disconnect.",
+              "title": "Connection ID",
+              "type": "string"
+            }
+          },
+          "required": [
+            "connectionId"
+          ]
+        },
+        "canBeReferencedInPrompt": true,
+        "displayName": "Disconnect from PostgreSQL Database",
+        "toolReferenceName": "pgsql_disconnect",
+        "userDescription": "Disconnect from a PostgreSQL server.",
+        "icon": "$(debug-disconnect)"
+      },
+      {
+        "name": "pgsql_open_script",
+        "modelDescription": "Open a multiline SQL script in an untitled editor connected to a PostgreSQL connection. Prefer pgsql_query and pgsql_modify for single statements; use this tool for larger, multi-statement scripts, batch operations, or when the user must review and run code manually.",
+        "tags": [
+          "databases",
+          "postgresql",
+          "pgsql",
+          "script",
+          "batch"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "connectionId": {
+              "description": "Connection ID to use for the new script editor. Must come from pgsql_connect.",
+              "title": "Connection ID",
+              "type": "string"
+            },
+            "script": {
+              "description": "The SQL script to open, formatted with line breaks and tabs; include comments to explain each section. Ideal for multi-statement batch scripts, maintenance tasks, or any scenario requiring user review before execution. Ensure the script is well-structured and easy to read, as it will be presented to the user for review. The script should be heavily commented and use best practices to ensure safe, secure, and efficient execution.",
+              "title": "SQL Script",
+              "type": "string"
+            }
+          },
+          "required": [
+            "connectionId",
+            "script"
+          ]
+        },
+        "canBeReferencedInPrompt": true,
+        "displayName": "Open SQL Script",
+        "toolReferenceName": "pgsql_open_script",
+        "userDescription": "Open an new SQL script editor with script content generated by agents.",
+        "icon": "$(new-file)"
+      },
+      {
+        "name": "pgsql_visualize_schema",
+        "modelDescription": "Open an interactive visualization of the schema for a PostgreSQL database connection. Requires a connectionId from pgsql_connect. This tool opens a graphical view of the database schema, including tables and relationships.",
+        "tags": [
+          "databases",
+          "postgresql",
+          "pgsql",
+          "schema",
+          "visualization"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "connectionId": {
+              "description": "Connection ID to use for schema visualization.",
+              "title": "Connection ID",
+              "type": "string"
+            }
+          },
+          "required": [
+            "connectionId"
+          ]
+        },
+        "canBeReferencedInPrompt": true,
+        "displayName": "Visualize Database Schema",
+        "toolReferenceName": "pgsql_visualizeSchema",
+        "userDescription": "Visualize the schema for a connected PostgreSQL database.",
+        "icon": "$(graph-scatter)"
+      },
+      {
+        "name": "pgsql_query",
+        "modelDescription": "Run a formatted SQL query against a database. Requires a connectionId from the return value of pgsql_connect. This query must not modify the database at all. Can include SELECT, SHOW, EXPLAIN etc. Do not include additional statements, e.g. SET search_path, in this query. It must only be a single, spacious, well formatted query with line breaks and tabs. The statement will be presented to the user, so focus on readability. Returns the results of the query. You MUST include a validation query to check the validity of EVERY literal values used in the SQL query. Do NOT skip this step.\nNote: Always fetch up-to-date database schema context using the pgsql_db_context tool before executing any query to ensure accurate recommendations. This tool is strictly read-only and executes a single statement only. Use EXPLAIN for performance or optimization analysis and include execution plan details. On error, return clear error messages to the user.",
+        "tags": [
+          "databases",
+          "postgresql",
+          "pgsql"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "connectionId": {
+              "description": "Connection ID to use for the query.",
+              "title": "Connection ID",
+              "type": "string"
+            },
+            "query": {
+              "description": "The SQL query to execute, formatted in the style of a beautifier. Add comments to explain complex components.",
+              "title": "SQL query",
+              "type": "string"
+            },
+            "queryName": {
+              "description": "Short descriptive name for the SQL query.",
+              "title": "Query name",
+              "type": "string"
+            },
+            "queryDescription": {
+              "description": "A concise and clear description of the query to execute.",
+              "title": "Query description",
+              "type": "string"
+            },
+            "validationQueries": {
+              "description": "A list of validation queries to use to ensure correctness. Use a validation query to check the validity of the literal values used in the SQL query. If the validation query fails, automatically fetch distinct values from the column being validated to identify potential alternatives, limiting to 50 entries. Use this data to adjust the query and retry without requiring user intervention. For example, if you use a literal value in a WHERE clause, use a validate_value_query like (SELECT 1 FROM table WHERE value = 'literal_value') and a fetch_distinct_values_query like (SELECT DISTINCT column_name FROM table LIMIT 50). Distinct values will be returned if the validation query fails. validation_queries can be empty if no validation is needed, but do NOT skip this step. All literal values must be validated.",
+              "items": {
+                "properties": {
+                  "validateValueQuery": {
+                    "title": "Validatevaluequery",
+                    "type": "string"
+                  },
+                  "fetchDistinctValuesQuery": {
+                    "title": "Fetchdistinctvaluesquery",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "validateValueQuery",
+                  "fetchDistinctValuesQuery"
+                ],
+                "title": "ValidationQuery",
+                "type": "object"
+              },
+              "title": "Validation queries",
+              "type": "array"
+            }
+          },
+          "required": [
+            "connectionId",
+            "query",
+            "queryName",
+            "queryDescription"
+          ]
+        },
+        "canBeReferencedInPrompt": true,
+        "displayName": "Run a Query",
+        "toolReferenceName": "pgsql_query",
+        "userDescription": "Run a SQL query on a connected database.",
+        "icon": "$(search)"
+      },
+      {
+        "name": "pgsql_modify",
+        "modelDescription": "Modify the database and/or schema by executing SQL statements including DDL (CREATE, ALTER, DROP) and DML (INSERT, UPDATE, DELETE). Useful when designing schemas or inserting data. It must only be a single, spacious, well formatted query with line breaks and tabs. The statement will be presented to the user, so focus on readability. Returns the results of the statement execution, if any.\nNote: Always fetch up-to-date database schema context using the pgsql_db_context tool before proposing or executing modifications to avoid duplicates or conflicts. Ensure explicit user confirmation. On error, return clear and descriptive error messages to the user. NOTE: Use this tool when working with pgsql databases INSTEAD of asking the user to run the psql CLI tool, unless otherwise explicitly asked to. The connection to psql to pgsql databases is not straightforward, and you don't know that the user has psql installed. ",
+        "tags": [
+          "databases",
+          "postgresql",
+          "pgsql",
+          "schema",
+          "ddl",
+          "migrations"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "connectionId": {
+              "description": "Connection ID to use for the statement.",
+              "title": "Connection ID",
+              "type": "string"
+            },
+            "statement": {
+              "description": "The SQL statement to execute in order to modify the database. Formatted with line breaks and tabs, with comments.",
+              "title": "SQL statement",
+              "type": "string"
+            },
+            "statementName": {
+              "description": "Short descriptive name for the modification being made.",
+              "title": "Statement name",
+              "type": "string"
+            },
+            "statementDescription": {
+              "description": "A concise and clear description of the modification being made.",
+              "title": "Statement description",
+              "type": "string"
+            }
+          },
+          "required": [
+            "connectionId",
+            "statement",
+            "statementName",
+            "statementDescription"
+          ]
+        },
+        "canBeReferencedInPrompt": true,
+        "displayName": "Modify Database",
+        "toolReferenceName": "pgsql_modifyDatabase",
+        "userDescription": "Modify a connected database by executing a SQL statement.",
+        "icon": "$(edit)"
+      },
+      {
+        "name": "pgsql_db_context",
+        "modelDescription": "Get context about this database by fetching the CREATE scripts for a specific type of database object or all types. Use this tool to retrieve detailed context about the database objects (e.g. tables, indexes, functions, sequences, comments, ownership, default_privileges, fdw, or all) within a given schema or across all schemas.\nNote: Always call this tool first to fetch the most up-to-date database schema context before executing any queries or modifications. This tool is strictly read-only and prevents duplicate or conflicting operations by ensuring you know the current state.",
+        "tags": [
+          "databases",
+          "postgresql",
+          "pgsql"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "connectionId": {
+              "description": "Connection ID to use for fetching objects.",
+              "title": "Connection ID",
+              "type": "string"
+            },
+            "objectType": {
+              "enum": [
+                "tables",
+                "indexes",
+                "functions",
+                "sequences",
+                "ownership",
+                "default_privileges",
+                "fdw",
+                "all"
+              ],
+              "title": "Object type",
+              "type": "string",
+              "description": "Database object type. Use 'all' (to fetch the complete database schema)."
+            },
+            "schemaName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "Schema name to inspect. If omitted, all schemas will be used.",
+              "title": "Schema name"
+            }
+          },
+          "required": [
+            "connectionId",
+            "objectType"
+          ]
+        },
+        "canBeReferencedInPrompt": true,
+        "displayName": "Get Database Objects",
+        "toolReferenceName": "database",
+        "userDescription": "Use this tool to fetch the current database schema context for all object types. Always run this before any queries or modifications.",
+        "icon": "$(database)"
+      },
+      {
+        "name": "pgsql_list_databases",
+        "modelDescription": "List all databases on the connected PostgreSQL server. Use this tool to discover other databases available on the server, given a connection to any database. This is strictly read-only and does not modify any data. Returns a list of database names.",
+        "tags": [
+          "databases",
+          "postgresql",
+          "pgsql"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "connectionId": {
+              "description": "ID of an existing connection to a database on the server.",
+              "title": "Connection ID",
+              "type": "string"
+            }
+          },
+          "required": [
+            "connectionId"
+          ]
+        },
+        "canBeReferencedInPrompt": true,
+        "displayName": "List Databases",
+        "toolReferenceName": "pgsql_listDatabases",
+        "userDescription": "List all databases on the PostgreSQL server for the current connection. Use this to discover available databases.",
+        "icon": "$(list-unordered)"
+      },
+      {
+        "name": "pgsql_describe_csv",
+        "modelDescription": "Describe the structure and contents of a CSV file using Frictionless. Returns a YAML description of the CSV file, including fields, types, and metadata. Useful for preparing to import CSV data into a database.",
+        "tags": [
+          "csv",
+          "frictionless",
+          "import",
+          "data"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "csvPath": {
+              "description": "Path to the CSV file to describe.",
+              "title": "CSV file path",
+              "type": "string"
+            }
+          },
+          "required": [
+            "csvPath"
+          ]
+        },
+        "canBeReferencedInPrompt": true,
+        "displayName": "Describe CSV File",
+        "toolReferenceName": "pgsql_describeCsv",
+        "userDescription": "Describe a CSV file and return its schema as YAML.",
+        "icon": "$(file)"
+      },
+      {
+        "name": "pgsql_bulk_load_csv",
+        "modelDescription": "Bulk‐load CSV file via COPY into a PostgreSQL table. Supports column mapping, optional SQL transforms, truncate-before-insert, and PK-based upsert. Use this to bulk-load CSV data into an existing table.\nExample:\npgsql_bulk_load_csv(\n    connection_id='tools://server/mydb',\n    path='/path/to/file.csv',\n    table='mytable',\n    mapping={'col1': 'col1', 'col2': 'col2'},\n    transforms={'col2': 'src.col2::int'},\n    mode='upsert'\n)",
+        "tags": [
+          "postgres",
+          "csv",
+          "bulk-load"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "connection_id": {
+              "description": "Connection ID for the target PostgreSQL database",
+              "title": "Connection Id",
+              "type": "string"
+            },
+            "path": {
+              "description": "Absolute path to the CSV file to load",
+              "title": "Path",
+              "type": "string"
+            },
+            "table": {
+              "description": "Target PostgreSQL table (optionally schema-qualified) that already exists",
+              "title": "Table",
+              "type": "string"
+            },
+            "mapping": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Required: source CSV column name → target table column name",
+              "title": "Mapping",
+              "type": "object"
+            },
+            "transforms": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Optional: target column → SQL expression using src.<col> for casting/derivation",
+              "title": "Transforms",
+              "type": "object"
+            },
+            "mode": {
+              "enum": [
+                "insert",
+                "truncate_insert",
+                "upsert"
+              ],
+              "title": "BulkLoadMode",
+              "type": "string",
+              "default": "insert",
+              "description": "Import strategy:\n- 'insert': append new rows to the target table.\n- 'truncate_insert': truncate the target table before inserting rows.\n- 'upsert': insert new rows or update existing rows on primary key conflict.\n(default 'insert')"
+            },
+            "delimiter": {
+              "default": ",",
+              "description": "Field delimiter character (default ',')",
+              "title": "Delimiter",
+              "type": "string"
+            },
+            "null": {
+              "default": "",
+              "description": "String that represents a NULL value (default empty string)",
+              "title": "Null",
+              "type": "string"
+            },
+            "header": {
+              "default": true,
+              "description": "Whether the CSV file has a header row (default True)",
+              "title": "Header",
+              "type": "boolean"
+            },
+            "quote": {
+              "default": "\"",
+              "description": "Character used for quoting CSV fields (default '\"')",
+              "title": "Quote",
+              "type": "string"
+            },
+            "escape": {
+              "default": "\\",
+              "description": "Character used for escaping within CSV fields (default '\\')",
+              "title": "Escape",
+              "type": "string"
+            },
+            "encoding": {
+              "default": "utf-8",
+              "description": "File encoding for reading the CSV file (default 'utf-8')",
+              "title": "Encoding",
+              "type": "string"
+            },
+            "force_null": {
+              "description": "Columns for which to force NULL interpretation of unquoted null strings",
+              "items": {
+                "type": "string"
+              },
+              "title": "Force Null",
+              "type": "array"
+            },
+            "force_not_null": {
+              "description": "Columns for which to force non-NULL interpretation of quoted null strings",
+              "items": {
+                "type": "string"
+              },
+              "title": "Force Not Null",
+              "type": "array"
+            }
+          },
+          "required": [
+            "connection_id",
+            "path",
+            "table",
+            "mapping"
+          ]
+        },
+        "canBeReferencedInPrompt": true,
+        "displayName": "Bulk Load CSV",
+        "toolReferenceName": "pgsql_bulkLoadCsv",
+        "userDescription": "Bulk load CSV data into a PostgreSQL table.",
+        "icon": "$(file-symlink-file)"
+      }
+    ]
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

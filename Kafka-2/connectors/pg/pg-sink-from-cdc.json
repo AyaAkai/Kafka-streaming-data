@@ -1,0 +1,44 @@
+{
+    "name": "postgres-jdbc-sink22",
+    "config": {
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      "tasks.max": "1",
+      "topics.regex": "cdc\\.test_db\\..*", 
+      "transforms": "RenameTopic,ValueToKey,tojson",
+      "transforms.RenameTopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
+      "transforms.RenameTopic.regex": "cdc\\.test_db\\.(.*)",
+      "transforms.RenameTopic.replacement": "$1",
+
+      "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+      "transforms.ValueToKey.fields": "_id",
+
+
+      "transforms.tojson.type": "com.github.cedelsb.kafka.connect.smt.Record2JsonStringConverter$Value",
+      "transforms.tojson.json.string.field.name" : "data",
+      "transforms.tojson.post.processing.to.xml" : false,
+      "transforms.tojson.json.writer.handle.logical.types" : true,
+      "transforms.tojson.json.writer.datetime.logical.types.as" : "STRING",
+      "transforms.tojson.json.writer.datetime.pattern" : "", 
+      "transforms.tojson.json.writer.datetime.zoneid" : "UTC",
+
+      "table.name.format": "test_db.${topic}",
+      "connection.url": "jdbc:postgresql://postgres:5432/postgres",
+      "connection.user": "admin",
+      "connection.password": "password",
+      "auto.create": "false",
+      "auto.evolve": "false",
+      "delete.enabled":"false",
+      "insert.mode": "upsert",
+      "pk.mode": "record_key",
+      "pk.fields": "_id",
+      
+      "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "key.converter.schemas.enable": "false",
+
+      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "value.converter.schemas.enable": "false",
+      
+      "time.precision.mode":"connect"
+    }
+  }
+  

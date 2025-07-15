@@ -1,0 +1,1 @@
+import{Ja as a,K as t,c as o,h as s,j as r,z as l}from"./chunk-MFWHCUK5.js";var m=o(l()),b=({labelText:n,muted:p,style:S})=>{let e=c();return(0,m.jsx)(a,{className:p?s(e.muted,e.text):e.text,style:S,children:n})},c=r({text:{textTransform:"uppercase",fontSize:t.fontSizeBase100},muted:{color:t.colorNeutralForeground1}});export{b as a};

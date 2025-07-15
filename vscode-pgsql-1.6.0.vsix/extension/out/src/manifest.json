@@ -1,0 +1,10 @@
+{
+    "algorithm": "sha256",
+    "hashes": {
+        "pgsqltoolsservice-win-x64.zip": "4a7a4f2889ec211d3934395c42de528065b5bd254446998594e1d2aea75ffb8d",
+        "pgsqltoolsservice-osx-arm64.tar.gz": "1a51da23c58897bf6a2d696c60ebd4605a8d5d16011146c48904d9b7fbb2d7b0",
+        "pgsqltoolsservice-linux-x64.tar.gz": "016f29c3d29edba71512beb8735c2b4e338c88b2f55cf7ab9b28317a3a012580",
+        "pgsqltoolsservice-osx-x86.tar.gz": "319089c558f8a45caafe2362aa063072bf77b5d9fc1e3d7adca7bdc34eb4808c",
+        "pgsqltoolsservice-linux-arm64.tar.gz": "99cc3102869f38f7cdcca4bed81884a7a117eac86e7fd6da9a998c893d4151ed"
+    }
+}

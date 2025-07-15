@@ -1,0 +1,170 @@
+trigger: none # https://aka.ms/obpipelines/triggers
+
+parameters: # parameters are shown up in ADO UI in a build queue time
+  - name: "debug"
+    displayName: "Enable debug output"
+    type: boolean
+    default: false
+
+variables:
+  - name: CDP_DEFINITION_BUILD_COUNT
+    value: $[counter('', 0)] # needed for onebranch.pipeline.version task https://aka.ms/obpipelines/versioning
+  - name: system.debug
+    value: ${{ parameters.debug }}
+  - name: WindowsContainerImage
+    value: "onebranch.azurecr.io/windows/ltsc2019/vse2022:latest" # Docker image which is used to build the project https://aka.ms/obpipelines/containers
+  - name: LinuxContainerImage
+    value: mcr.microsoft.com/mirror/docker/library/ubuntu:22.04
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: OneBranch.Pipelines/GovernedTemplates
+      ref: refs/heads/main
+
+extends: # Governed template expands from here which defines over all pipeline orchestration with OneBranch security, Compliance & Governance enabled
+  template: v2/OneBranch.Official.CrossPlat.yml@templates # The Official template may only be used by Production-classified pipelines
+  parameters:
+    git:
+      fetchDepth: 1
+
+    featureFlags:
+      LinuxHostVersion:
+        Network: KS1
+      WindowsHostVersion:
+        Network: KS1
+      linuxEsrpSigning: true
+
+    cloudvault: # https://aka.ms/obpipelines/cloudvault
+      enabled: false
+    globalSdl: # https://aka.ms/obpipelines/sdl
+      tsa:
+        enabled: false # onebranch publish all sdl results to TSA. If TSA is disabled all SDL tools will forced into 'break' build mode.
+      policheck:
+        break: true # always break the build on policheck issues. You can disable it by setting to 'false'
+      perStage:
+        sdl_sources:
+          checkout_all_repos: true
+
+    stages:
+      - stage: Build
+        jobs:
+        - job: pr_checks
+          pool:
+            type: linux
+
+          variables:
+            ob_git_checkout: true
+            ob_outputDirectory: "$(Build.ArtifactStagingDirectory)" # REQUIRED even if not used: this directory is uploaded to pipeline artifacts, reddog and cloudvault. More info at https://aka.ms/obpipelines/artifacts
+
+          steps:
+            - task: npmAuthenticate@0
+              inputs:
+                workingFile: .npmrc
+
+            # - bash: |
+            #     git clone $(Build.Repository.Uri) main
+            #     cd main
+            #     git checkout main
+            #   displayName: "Clone and checkout main branch"
+
+            - task: UseNode@1
+              displayName: "Use Node.js 22"
+              inputs:
+                version: "22.x"
+
+            - bash: |
+                lsb_release -a
+                apt-get update
+                apt-get install -y libxkbfile-dev pkg-config libsecret-1-dev libkrb5-dev libxss1 dbus xvfb libgtk-3-0 libgbm1 libnss3 libnss3-dev libasound2 git
+                cp build/xvfb.init /etc/init.d/xvfb
+                chmod +x /etc/init.d/xvfb
+                update-rc.d xvfb defaults
+                service xvfb start
+              displayName: "Set up xvfb"
+
+            - bash: |
+                echo 'Installing tools'
+                npm install --global yarn@1.22.19 gulp-cli@2.3.0 vsce@2.9.2 gulp@4.0.2
+              displayName: "Install tools"
+            # - bash: |
+            #     cd main
+            #     rm -rf node_modules
+            #     mv yarn.lock yarn.lock_bak
+            #     mv yarn.lock_cfs yarn.lock
+            #     echo "=== Installing dependencies ==="
+            #     head yarn.lock -n 20
+            #     yarn install --verbose --frozen-lockfile
+            #   displayName: "Install dependencies (main)"
+            # - bash: |
+            #     cd main
+            #     yarn build --prod
+            #   displayName: "Build extension (main)"
+            # - bash: |
+            #     cd main
+            #     yarn gulp package:online
+            #   displayName: "Package extension (main)"
+            - bash: |
+                rm -rf node_modules
+                mv yarn.lock yarn.lock_bak
+                mv yarn.lock_cfs yarn.lock
+                echo "=== Installing dependencies ==="
+                head yarn.lock -n 20
+                yarn install --verbose --frozen-lockfile
+              displayName: "Install dependencies (pr)"
+            - bash: |
+                yarn build --prod
+              displayName: "Build extension (pr)"
+            - bash: |
+                yarn gulp package:online
+              displayName: "Package extension (pr)"
+            - bash: |
+                yarn typecheck
+              displayName: "Run typechecks"
+            # - bash: |
+            #     cd pr
+            #     DISPLAY=:10 yarn test
+              # displayName: "Unit tests"
+            # - bash: |
+            #     cd main
+            #     webview_main=$(du -sk ./out/src/reactviews/assets | cut -f1)
+            #     webview_pr=$(cd pr && du -sk ./out/src/reactviews/assets | cut -f1)
+            #     echo "##vso[task.setvariable variable=main_webview_bundle_size]$webview_main"
+            #     echo "##vso[task.setvariable variable=pr_webview_bundle_size]$webview_pr"
+            #     size_diff=$((webview_pr - webview_main))
+            #     echo "##vso[task.setvariable variable=webview_size_diff]$size_diff"
+            #     pct=$((100 * size_diff / webview_main))
+            #     echo "##vso[task.setvariable variable=webview_bundle_percentage_change]$pct"
+            #   displayName: "Calculate webview bundle sizes"
+            # - bash: |
+            #     main_vsix=$(find main -name '*.vsix' | head -n1)
+            #     pr_vsix=$(find pr -name '*.vsix' | head -n1)
+            #     main_size=$(( $(stat -c%s "$main_vsix") / 1024 ))
+            #     pr_size=$(( $(stat -c%s "$pr_vsix") / 1024 ))
+            #     echo "##vso[task.setvariable variable=main_vsix_size]$main_size"
+            #     echo "##vso[task.setvariable variable=pr_vsix_size]$pr_size"
+            #     size_diff=$((pr_size - main_size))
+            #     echo "##vso[task.setvariable variable=vsix_size_diff]$size_diff"
+            #     pct=$((100 * size_diff / main_size))
+            #     echo "##vso[task.setvariable variable=vsix_percentage_change]$pct"
+            #   displayName: "Calculate vsix file sizes"
+            # - bash: |
+            #     if [ $vsix_percentage_change -gt 5 ] || [ $pr_vsix_size -gt 25000 ]; then exit 1; fi
+            #   displayName: "Fail if vsix size increased"
+            # - bash: |
+            #     if [ $webview_bundle_percentage_change -gt 5 ]; then exit 1; fi
+            #   displayName: "Fail if bundle size increased"
+            - bash: |
+                yarn localization
+              displayName: "Generate xliff files in PR branch"
+            - bash: |
+                if git diff --quiet --exit-code ./localization/xliff/vscode-mssql.xlf; then
+                  echo "##vso[task.setvariable variable=loc_update_required]false"
+                else
+                  echo "##vso[task.setvariable variable=loc_update_required]true"
+                fi
+              displayName: "Check for changes in english xlf files"
+            - bash: |
+                if [ "$LOC_UPDATE_REQUIRED" == "true" ]; then exit 1; fi
+              displayName: "Fail if changes required in english xlf files"

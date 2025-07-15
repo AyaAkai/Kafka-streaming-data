@@ -1,0 +1,30 @@
+{
+  "name": "test-29",
+  "config": {
+    "connector.class": "com.mongodb.kafka.connect.MongoSourceConnector",
+    "tasks.max": "1",
+    "topic.prefix": "hij",
+    "connection.uri": "mongodb://mongodb:27017/?authSource=admin&replicaSet=rs0",
+    "database": "test_db",
+    "startup.mode": "copy_existing",
+    "startup.mode.copy.existing.namespace.regex": "test_db\\.(users|orders))",
+    "publish.full.document.only": "true",
+    "change.stream.full.document": "updateLookup",
+    "output.format.key": "schema",
+    "output.format.value": "schema",
+    "output.json.formatter": "com.mongodb.kafka.connect.source.json.formatter.SimplifiedJson",
+    "output.schema.infer.value": "true",
+    "key.converter": "io.confluent.connect.avro.AvroConverter",
+    "key.converter.schema.registry.url": "http://schema-registry:8081",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://schema-registry:8081",
+    "provide.transaction.metadata": "true",
+    "heartbeat.interval.ms": "5000",
+    "snapshot.mode": "initial",
+    "poll.interval.ms": "1000",
+    "database.history.kafka.bootstrap.servers": "broker:9092",
+    "database.history.kafka.topic": "schema-changes.mongodb",
+    "errors.tolerance": "all",
+    "errors.log.enable": "true"
+  }
+}

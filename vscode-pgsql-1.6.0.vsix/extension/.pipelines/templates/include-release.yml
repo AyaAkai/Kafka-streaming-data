@@ -1,0 +1,112 @@
+steps:
+  - bash: |
+      if [[ "$BUILD_SOURCEBRANCH" == refs/tags/* ]]; then
+        TAG_NAME=${BUILD_SOURCEBRANCH#refs/tags/}
+        echo "##vso[task.setvariable variable=ReleaseVersion]$TAG_NAME"
+      else
+        echo "##vso[task.setvariable variable=ReleaseVersion]v0.0.1"
+      fi
+    displayName: Get Release Version
+
+  - bash: |
+      if echo "$(ReleaseVersion)" | grep -q -- "-dev"; then
+        echo "##vso[task.setvariable variable=IsDevTag]true"
+      else
+        echo "##vso[task.setvariable variable=IsDevTag]false"
+      fi
+      echo "IsDevTag set to: $(IsDevTag)"
+    displayName: Determine dev tag
+
+  - bash: |
+      TAG_NAME=$(echo "$(ReleaseVersion)" | sed 's/^v//')
+      MINOR=$(echo "$TAG_NAME" | cut -d. -f2 | cut -d- -f1)
+      if [[ "$MINOR" =~ ^[0-9]+$ ]]; then
+        if (( $MINOR % 2 == 1 )); then
+          echo "##vso[task.setvariable variable=IsOddMinor]true"
+        else
+          echo "##vso[task.setvariable variable=IsOddMinor]false"
+        fi
+      else
+        echo "##vso[task.setvariable variable=IsOddMinor]false"
+      fi
+    displayName: 'Determine odd minor version'
+
+  - bash: |
+      if [[ "$(IsOddMinor)" == "true" ]]; then
+        echo "##vso[task.setvariable variable=VscePreReleaseFlag]--pre-release"
+      else
+        echo "##vso[task.setvariable variable=VscePreReleaseFlag]"
+      fi
+    displayName: 'Set VSCE pre-release flag'
+
+  - task: DownloadPipelineArtifact@2
+    displayName: "Download release artifacts"
+    inputs:
+      itemPattern: |
+        drop_Build_build_extension/vscode-pgsql.vsix
+        drop_Build_build_extension/extension.manifest
+        drop_Build_build_extension/extension.signature.p7s
+      targetPath: $(Agent.TempDirectory)
+
+  - task: CopyFiles@2
+    displayName: "Copy build packages to: $(Build.ArtifactStagingDirectory)"
+    inputs:
+      SourceFolder: "$(Agent.TempDirectory)"
+      Contents: |
+        drop_Build_build_extension/vscode-pgsql.vsix
+        drop_Build_build_extension/extension.manifest
+        drop_Build_build_extension/extension.signature.p7s
+      TargetFolder: "$(Build.ArtifactStagingDirectory)"
+      flattenFolders: true
+
+  - script: mv "vscode-pgsql.vsix" "vscode-pgsql-$(ReleaseVersion).vsix"
+    displayName: "Rename VSIX to include version"
+    workingDirectory: "$(Build.ArtifactStagingDirectory)"
+
+  - task: GithubRelease@1
+    displayName: "Create GitHub Release"
+    inputs:
+      gitHubConnection: "Database Systems (3)"
+      repositoryName: "azure-data-database-platform/vs-code-postgresql"
+      tagSource: userSpecifiedTag
+      tag: "$(ReleaseVersion)"
+      title: "$(ReleaseVersion)"
+      changeLogType: commitBased
+      assets: |
+        $(Build.ArtifactStagingDirectory)/vscode-pgsql-$(ReleaseVersion).vsix
+      isPrerelease: $[eq(variables['IsDevTag'], 'true')]
+
+  - task: UseNode@1
+    displayName: "Use Node.js 22"
+    inputs:
+      version: "22.x"
+    condition: and(succeeded(), eq(variables['IsDevTag'], 'false'))
+
+  - task: Bash@3
+    displayName: "Install VSCE"
+    inputs:
+      targetType: "inline"
+      script: |
+        echo "Installing VSCE"
+        npm install --global @vscode/vsce@3.3.2
+    condition: and(succeeded(), eq(variables['IsDevTag'], 'false'))
+
+  - task: AzureCLI@2
+    displayName: 'Publish to VSCode Marketplace'
+    inputs:
+      # This is the name of the service connection in Azure DevOps
+      azureSubscription: VS-Code-VSCE-MSFT
+      scriptType: "pscore"
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        Write-Host "Starting VSCode Marketplace publication..."
+        Write-Host "Using VSIX file: $(Build.ArtifactStagingDirectory)/vscode-pgsql-$(ReleaseVersion).vsix"
+
+        vsce publish $(VscePreReleaseFlag) `
+          -i "$(Build.ArtifactStagingDirectory)/vscode-pgsql-$(ReleaseVersion).vsix" `
+          --manifestPath "$(Build.ArtifactStagingDirectory)/extension.manifest" `
+          --signaturePath "$(Build.ArtifactStagingDirectory)/extension.signature.p7s" `
+          --azure-credential
+
+        Write-Host "Publication completed successfully"
+    condition: and(succeeded(), eq(variables['IsDevTag'], 'false'))

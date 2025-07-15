@@ -1,0 +1,129 @@
+{
+  "Drop a Database": {
+    "prefix": "pgDropDatabase",
+    "body": [
+      "-- Drop an existing database '${1:DatabaseName}'",
+      "DROP DATABASE ${1:DatabaseName};"
+    ],
+    "description": "Drop an existing PostgreSQL database"
+  },
+  "Create a new Table": {
+    "prefix": "pgCreateTable",
+    "body": [
+      "-- Create a new table '${1:TableName}' with a primary key and columns",
+      "CREATE TABLE ${1:TableName} (",
+      "    id SERIAL PRIMARY KEY,",
+      "    ${2:column_name} ${3:DATA_TYPE},",
+      "    ${4:another_column} ${5:DATA_TYPE}",
+      ");"
+    ],
+    "description": "Create a basic table with a primary key"
+  },
+  "Drop a Table": {
+    "prefix": "pgDropTable",
+    "body": ["-- Drop an existing table '${1:TableName}'", "DROP TABLE ${1:TableName};"],
+    "description": "Remove a table"
+  },
+  "Insert Data": {
+    "prefix": "pgInsertData",
+    "body": [
+      "-- Insert data into '${1:TableName}'",
+      "INSERT INTO ${1:TableName} (${2:column1}, ${3:column2})",
+      "VALUES (${4:value1}, ${5:value2});"
+    ],
+    "description": "Insert a row into a table"
+  },
+  "Select All Rows": {
+    "prefix": "pgSelectAll",
+    "body": ["-- Select all rows from '${1:TableName}'", "SELECT * FROM ${1:TableName};"],
+    "description": "Simple SELECT query"
+  },
+  "Update Rows": {
+    "prefix": "pgUpdateRows",
+    "body": [
+      "-- Update rows in '${1:TableName}' where condition is met",
+      "UPDATE ${1:TableName}",
+      "SET ${2:column} = ${3:new_value}",
+      "WHERE ${4:condition};"
+    ],
+    "description": "Update data in a table"
+  },
+  "Delete Rows": {
+    "prefix": "pgDeleteRows",
+    "body": [
+      "-- Delete rows from '${1:TableName}' where condition is met",
+      "DELETE FROM ${1:TableName}",
+      "WHERE ${2:condition};"
+    ],
+    "description": "Delete data from a table"
+  },
+  "Create an Index": {
+    "prefix": "pgCreateIndex",
+    "body": [
+      "-- Create an index on '${1:TableName}' for better query performance",
+      "CREATE INDEX ${2:index_name}",
+      "ON ${1:TableName} (${3:column_name});"
+    ],
+    "description": "Create an index on a specified column"
+  },
+  "Create a User (Role)": {
+    "prefix": "pgCreateUser",
+    "body": [
+      "-- Create a new user with password",
+      "CREATE ROLE ${1:username} WITH LOGIN PASSWORD '${2:password}';"
+    ],
+    "description": "Create a new role/user"
+  },
+  "Grant Privileges": {
+    "prefix": "pgGrantPrivileges",
+    "body": [
+      "-- Grant privileges to a user on a table",
+      "GRANT ${1:SELECT|INSERT|UPDATE|DELETE}",
+      "ON ${2:TableName}",
+      "TO ${3:username};"
+    ],
+    "description": "Grant privileges on a table to a user"
+  },
+  "Use a CTE (Common Table Expression)": {
+    "prefix": "pgCTE",
+    "body": [
+      "-- Use a CTE to structure complex queries",
+      "WITH ${1:cte_name} AS (",
+      "    SELECT ${2:columns}",
+      "    FROM ${3:TableName}",
+      "    WHERE ${4:condition}",
+      ")",
+      "SELECT * FROM ${1:cte_name};"
+    ],
+    "description": "Demonstrate using a Common Table Expression"
+  },
+  "Left Join Example": {
+    "prefix": "pgLeftJoin",
+    "body": [
+      "-- Perform a LEFT JOIN between two tables",
+      "SELECT a.${2:column}, b.${3:column}",
+      "FROM ${1:TableA} a",
+      "LEFT JOIN ${4:TableB} b ON a.${5:key} = b.${5:key};"
+    ],
+    "description": "Example of a LEFT JOIN query"
+  },
+  "Check Query Execution Time": {
+    "prefix": "pgExplainAnalyze",
+    "body": [
+      "-- Use EXPLAIN ANALYZE to diagnose query performance",
+      "EXPLAIN ANALYZE",
+      "SELECT * FROM ${1:TableName};"
+    ],
+    "description": "Show query execution plan and performance details"
+  },
+  "List All Tables (SQL)": {
+    "prefix": "pgListTables",
+    "body": [
+      "-- List all tables in the current schema",
+      "SELECT tablename",
+      "FROM pg_catalog.pg_tables",
+      "WHERE schemaname = '${1:public}';"
+    ],
+    "description": "List all tables in a specific schema using SQL"
+  }
+}
